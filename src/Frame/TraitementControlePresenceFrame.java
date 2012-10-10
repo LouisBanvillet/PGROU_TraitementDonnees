@@ -21,6 +21,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
      */
     public TraitementControlePresenceFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         choixAction.addActionListener(new ItemAction());
         creationBouton.addActionListener(new BoutonListener());
     }
@@ -55,7 +56,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
                 choixActionActionPerformed(evt);
             }
         });
-        getContentPane().add(choixAction, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 180, -1));
+        getContentPane().add(choixAction, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 180, -1));
 
         titre2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         titre2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -69,7 +70,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
 
         textRequest.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         textRequest.setText("Quel objet est concerné par votre requête?");
-        getContentPane().add(textRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 20));
+        getContentPane().add(textRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 20));
 
         tableDonnees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
