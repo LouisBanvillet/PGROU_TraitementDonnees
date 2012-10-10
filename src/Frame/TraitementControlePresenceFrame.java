@@ -68,7 +68,6 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         titre1.setText("Traitement des données");
         getContentPane().add(titre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 230, -1));
 
-        textRequest.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         textRequest.setText("Quel objet est concerné par votre requête?");
         getContentPane().add(textRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 20));
 
