@@ -1,8 +1,9 @@
 package Frame;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /*
  * To change this template, choose Tools | Templates
@@ -21,6 +22,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
     public TraitementControlePresenceFrame() {
         initComponents();
         choixAction.addActionListener(new ItemAction());
+        creationBouton.addActionListener(new BoutonListener());
     }
 
     /**
@@ -38,7 +40,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         textRequest = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDonnees = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        creationBouton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Traitement des données - Contrôle de présence");
@@ -46,7 +48,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(500, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        choixAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Un élève", "Une matière", "Un élève dans une matière", "Un professeur" }));
+        choixAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Un élève", "Une matière", "Un élève dans une matière", "Un professeur" }));
         choixAction.setPreferredSize(new java.awt.Dimension(80, 20));
         choixAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,16 +81,9 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         tableDonnees.setCellSelectionEnabled(true);
@@ -99,8 +94,8 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 170, 430, 110));
 
-        jButton1.setText("Créer le fichier .xls");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
+        creationBouton.setText("Créer le fichier .xls");
+        getContentPane().add(creationBouton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -172,11 +167,52 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         tableDonnees.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tableDonnees.getColumnModel().getColumn(0).setResizable(false);
         tableDonnees.getColumnModel().getColumn(1).setResizable(false);
+        
+    }
+    
+        
+    class BoutonListener implements ActionListener{
+        //Redéfinition de la méthode actionPerformed()
+        public void actionPerformed(ActionEvent arg0) {
+	   generateCsvFile("csv/test.csv");        
+        }
+    }
+    
+    private static void generateCsvFile(String sFileName)
+   {
+	try
+	{
+	    FileWriter writer = new FileWriter(sFileName);
+ 
+	    writer.append("DisplayName");
+	    writer.append(';');
+	    writer.append("Age");
+	    writer.append('\n');
+ 
+	    writer.append("MKYONG");
+	    writer.append(';');
+	    writer.append("26");
+            writer.append('\n');
+ 
+	    writer.append("YOUR NAME");
+	    writer.append(';');
+	    writer.append("29");
+	    writer.append('\n');
+ 
+	    //generate whatever data you want
+ 
+	    writer.flush();
+	    writer.close();
+	}
+	catch(IOException e)
+	{
+	     e.printStackTrace();
+	} 
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox choixAction;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton creationBouton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableDonnees;
     private javax.swing.JLabel textRequest;
