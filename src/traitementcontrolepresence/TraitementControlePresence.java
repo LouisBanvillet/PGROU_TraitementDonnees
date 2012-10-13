@@ -7,9 +7,9 @@ package traitementcontrolepresence;
 import Frame.TraitementControlePresenceFrame;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -27,12 +27,12 @@ public class TraitementControlePresence {
     public static void main(String[] args) {
         
         try {
-                Class.forName("org.postgresql.Driver");
+                org.postgresql.Driver driver = new org.postgresql.Driver(); 
                 System.out.println("DRIVER OK ! ");
 
-                String url = "jdbc:postgresql://localhost:5432/AGAP_PGROU";
-                String user = "postgres";
-                String passwd = "sagara";
+                String url = "jdbc:postgresql://localhost:5432/pgrou";
+                String user = "kevin";
+                String passwd = "&&EÉÉI&'";
 
                 conn = DriverManager.getConnection(url, user, passwd);
                 System.out.println("Connection effective !");			
@@ -64,12 +64,42 @@ public class TraitementControlePresence {
                 
                 while(res.next()){
                         contenu += res.getString("presence_status") + ";" + res.getString("cours_designation") + "\n";
+                         
                 }
-                
+               
                 res.close();
                 state.close();                        
 
                 generateCsvFile("csv/FormulaireAbsence" + nomEleve + prenomEleve + ".csv", contenu); 
+
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+    }
+    
+    public static void creationFormulaireAbsenceMatiere(String nomMatiere){
+        String contenu = nomMatiere + "\n";
+                
+        try {
+                Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+                //On crée notre requête
+                String query = ("SELECT cours.cours_designation,eleves.eleves_nom,eleves.eleves_prenom,presence.presence_status "
+                  + "FROM presence, eleves, cours "
+                  + "WHERE presence.eleves_id = eleves.eleves_id AND presence.cours_id = cours.cours_id AND "
+                  + "cours.cours_designation = '" + nomMatiere  +"';");
+                			
+		ResultSet res = state.executeQuery(query);
+                
+                while(res.next()){
+                        contenu += res.getString("presence_status") + ";" + res.getString("eleves_nom") + ";" + res.getString("eleves_prenom")+"\n";
+                         
+                }
+               System.out.println(contenu);
+                res.close();
+                state.close();                        
+
+                generateCsvFile("csv/FormulaireAbsence" + nomMatiere + ".csv", contenu); 
 
         } catch (Exception e) {
                 e.printStackTrace();
@@ -87,9 +117,14 @@ public class TraitementControlePresence {
 	    writer.flush();
 	    writer.close();
 	}
-	catch(IOException e)
+	catch(NullPointerException e)
 	{
-	     e.printStackTrace();
+	     System.out.println("Erreur : pointeur null");
+	} 
+        catch(IOException e)
+	{
+	     System.out.println("Problème d'IO");
+             e.printStackTrace();
 	} 
     }
     

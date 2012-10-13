@@ -3,8 +3,6 @@ package Frame;
 import traitementcontrolepresence.TraitementControlePresence;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /*
  * To change this template, choose Tools | Templates
@@ -183,9 +181,10 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
                             ((String) tableDonnees.getValueAt(0, 1)), 
                             ((String) tableDonnees.getValueAt(1, 1))
                         );
-                    break;
-                case 2 : ;
-                    break;
+               break;
+                case 2 : TraitementControlePresence.creationFormulaireAbsenceMatiere(
+                            ((String) tableDonnees.getValueAt(0, 1)));
+               break;
                 case 3 : ;
                     break;
                 case 4 : ;
