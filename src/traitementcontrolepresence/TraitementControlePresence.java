@@ -69,7 +69,7 @@ public class TraitementControlePresence {
                 res.close();
                 state.close();                        
 
-                generateCsvFile("csv/test.csv", contenu); 
+                generateCsvFile("csv/FormulaireAbsence" + nomEleve + prenomEleve + ".csv", contenu); 
 
         } catch (Exception e) {
                 e.printStackTrace();
