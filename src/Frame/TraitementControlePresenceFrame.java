@@ -1,5 +1,6 @@
 package Frame;
 
+import traitementcontrolepresence.TraitementControlePresence;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
@@ -115,26 +116,27 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
             String[][] tabValeur = new String [0][0];
             
             switch(choixAction.getSelectedIndex()){
-                case 0 : tabValeur = new String [][] {
+                case 1 : tabValeur = new String [][] {
                         {"Nom :", null},
                         {"Prénom :", null}
                     };
                     break;
-                case 1 : tabValeur = new String [][] {
-                        {"Nom de la matière :", null}
-                    };
-                    break;
                 case 2 : tabValeur = new String [][] {
-                        {"Nom :", null},
-                        {"Prénom :", null},
                         {"Nom de la matière :", null}
                     };
                     break;
                 case 3 : tabValeur = new String [][] {
                         {"Nom :", null},
+                        {"Prénom :", null},
+                        {"Nom de la matière :", null}
+                    };
+                    break;
+                case 4 : tabValeur = new String [][] {
+                        {"Nom :", null},
                         {"Prénom :", null}
                     };
-                    break;                    
+                    break;
+                default:;                    
             }
             
             modifTable(tabValeur);
@@ -175,40 +177,20 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
     class BoutonListener implements ActionListener{
         //Redéfinition de la méthode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-	   generateCsvFile("csv/test.csv");        
+            
+            switch(choixAction.getSelectedIndex()){
+                case 1 : TraitementControlePresence.creationFormulaireAbsenceEtudiant("Dépériers", "Vincent");
+                    break;
+                case 2 : ;
+                    break;
+                case 3 : ;
+                    break;
+                case 4 : ;
+                    break;  
+                default:;
+            }
+        
         }
-    }
-    
-    private static void generateCsvFile(String sFileName)
-   {
-	try
-	{
-	    FileWriter writer = new FileWriter(sFileName);
- 
-	    writer.append("DisplayName");
-	    writer.append(';');
-	    writer.append("Age");
-	    writer.append('\n');
- 
-	    writer.append("MKYONG");
-	    writer.append(';');
-	    writer.append("26");
-            writer.append('\n');
- 
-	    writer.append("YOUR NAME");
-	    writer.append(';');
-	    writer.append("30");
-	    writer.append('\n');
- 
-	    //generate whatever data you want
- 
-	    writer.flush();
-	    writer.close();
-	}
-	catch(IOException e)
-	{
-	     e.printStackTrace();
-	} 
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
