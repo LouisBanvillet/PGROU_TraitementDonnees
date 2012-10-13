@@ -179,7 +179,10 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent arg0) {
             
             switch(choixAction.getSelectedIndex()){
-                case 1 : TraitementControlePresence.creationFormulaireAbsenceEtudiant("Dépériers", "Vincent");
+                case 1 : TraitementControlePresence.creationFormulaireAbsenceEtudiant(
+                            ((String) tableDonnees.getValueAt(0, 1)), 
+                            ((String) tableDonnees.getValueAt(1, 1))
+                        );
                     break;
                 case 2 : ;
                     break;
