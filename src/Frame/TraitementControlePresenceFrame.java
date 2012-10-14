@@ -3,6 +3,7 @@ package Frame;
 import traitementcontrolepresence.TraitementControlePresence;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /*
  * To change this template, choose Tools | Templates
@@ -14,7 +15,7 @@ import java.awt.event.ActionListener;
  * @author Louis
  */
 public class TraitementControlePresenceFrame extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form TraitementControlePresenceFrame
      */
@@ -170,8 +171,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         tableDonnees.getColumnModel().getColumn(1).setResizable(false);
         
     }
-    
-        
+   
     class BoutonListener implements ActionListener{
         //Redéfinition de la méthode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
@@ -185,16 +185,21 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
                 case 2 : TraitementControlePresence.creationFormulaireAbsenceMatiere(
                             ((String) tableDonnees.getValueAt(0, 1)));
                break;
-                case 3 : ;
+                /*case 3 : ;
                     break;
                 case 4 : ;
-                    break;  
+                    break; */ 
                 default:;
             }
         
         }
+    }   
+     public static void avertissement(String message,String titre) {        
+        
+       JOptionPane.showMessageDialog(null, message,titre,JOptionPane.WARNING_MESSAGE);         
+         
     }
-    
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox choixAction;
     private javax.swing.JButton creationBouton;
