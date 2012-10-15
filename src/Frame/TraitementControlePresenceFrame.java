@@ -34,10 +34,13 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        choixAction = new javax.swing.JComboBox();
+        jPanel1 = new javax.swing.JPanel();
         titre2 = new javax.swing.JLabel();
         titre1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         textRequest = new javax.swing.JLabel();
+        choixAction = new javax.swing.JComboBox();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDonnees = new javax.swing.JTable();
         creationBouton = new javax.swing.JButton();
@@ -45,29 +48,67 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Traitement des données - Contrôle de présence");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setMaximumSize(null);
+        setPreferredSize(new java.awt.Dimension(500, 400));
+        setResizable(false);
+        getContentPane().setLayout(new java.awt.FlowLayout());
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(500, 80));
+        jPanel1.setOpaque(false);
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 80));
+
+        titre2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        titre2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titre2.setText("Contrôle de présence");
+        titre2.setMaximumSize(null);
+        titre2.setMinimumSize(null);
+        titre2.setPreferredSize(new java.awt.Dimension(500, 40));
+        jPanel1.add(titre2);
+
+        titre1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        titre1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titre1.setText("Traitement des données");
+        titre1.setMaximumSize(new java.awt.Dimension(200, 50));
+        titre1.setMinimumSize(null);
+        titre1.setName(""); // NOI18N
+        titre1.setPreferredSize(new java.awt.Dimension(500, 25));
+        jPanel1.add(titre1);
+
+        getContentPane().add(jPanel1);
+
+        jPanel2.setMaximumSize(null);
+        jPanel2.setMinimumSize(new java.awt.Dimension(500, 90));
+        jPanel2.setPreferredSize(new java.awt.Dimension(500, 90));
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 10));
+
+        textRequest.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textRequest.setText("Quel objet est concerné par votre requête?");
+        textRequest.setMaximumSize(null);
+        textRequest.setMinimumSize(null);
+        textRequest.setPreferredSize(new java.awt.Dimension(500, 30));
+        jPanel2.add(textRequest);
 
         choixAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Un élève", "Une matière", "Un élève dans une matière", "Un professeur" }));
-        choixAction.setPreferredSize(new java.awt.Dimension(80, 20));
+        choixAction.setMaximumSize(null);
+        choixAction.setMinimumSize(null);
+        choixAction.setPreferredSize(new java.awt.Dimension(200, 20));
         choixAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 choixActionActionPerformed(evt);
             }
         });
-        getContentPane().add(choixAction, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 180, -1));
+        jPanel2.add(choixAction);
 
-        titre2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        titre2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titre2.setText("Contrôle de présence");
-        getContentPane().add(titre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 220, -1));
+        getContentPane().add(jPanel2);
 
-        titre1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        titre1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titre1.setText("Traitement des données");
-        getContentPane().add(titre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 230, -1));
+        jPanel3.setMaximumSize(null);
+        jPanel3.setMinimumSize(new java.awt.Dimension(500, 170));
+        jPanel3.setPreferredSize(new java.awt.Dimension(500, 170));
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 10));
 
-        textRequest.setText("Quel objet est concerné par votre requête?");
-        getContentPane().add(textRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 20));
+        jScrollPane1.setMaximumSize(null);
+        jScrollPane1.setMinimumSize(null);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 120));
 
         tableDonnees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -86,15 +127,20 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
             }
         });
         tableDonnees.setCellSelectionEnabled(true);
+        tableDonnees.setMaximumSize(null);
+        tableDonnees.setMinimumSize(null);
+        tableDonnees.setPreferredSize(null);
         jScrollPane1.setViewportView(tableDonnees);
         tableDonnees.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tableDonnees.getColumnModel().getColumn(0).setResizable(false);
         tableDonnees.getColumnModel().getColumn(1).setResizable(false);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 170, 430, 110));
+        jPanel3.add(jScrollPane1);
 
         creationBouton.setText("Créer le fichier .xls");
-        getContentPane().add(creationBouton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
+        jPanel3.add(creationBouton);
+
+        getContentPane().add(jPanel3);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -212,6 +258,9 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox choixAction;
     private javax.swing.JButton creationBouton;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableDonnees;
     private javax.swing.JLabel textRequest;
