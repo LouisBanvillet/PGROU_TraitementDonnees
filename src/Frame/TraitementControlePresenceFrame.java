@@ -49,7 +49,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         setMaximumSize(null);
         setPreferredSize(new java.awt.Dimension(500, 400));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.FlowLayout());
+        getContentPane().setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 2));
 
         jPanel1.setMinimumSize(new java.awt.Dimension(500, 80));
         jPanel1.setOpaque(false);
