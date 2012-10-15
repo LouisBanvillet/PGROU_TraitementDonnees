@@ -18,14 +18,18 @@ import java.sql.Statement;
 
 /**
  *
- * @author Louis
+ * @author Louis, Kevin
  */
 public class TraitementControlePresence {
 
+    /**
+     *
+     */
     protected static Connection conn;
 
     /**
      * @param args the command line arguments
+     * Connexion base de données après lecture des paramètres de connexion fichier MDP_connexionBDD.txt
      */
     public static void main(String[] args) {
 
@@ -33,7 +37,7 @@ public class TraitementControlePresence {
             org.postgresql.Driver driver = new org.postgresql.Driver();
             System.out.println("DRIVER OK ! ");
 
-            //lecture d'un fichier texte contenant les identifiants de connexion à la BDD
+            
             InputStream ips = new FileInputStream("MDP_connexionBDD.txt");
             InputStreamReader ipsr = new InputStreamReader(ips);
             BufferedReader br = new BufferedReader(ipsr);
@@ -48,12 +52,16 @@ public class TraitementControlePresence {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // TODO code application logic here
+        
         TraitementControlePresenceFrame TraitementFrame = new TraitementControlePresenceFrame();
         TraitementFrame.setVisible(true);
     }
 
+    /**
+     * Creation d'un formulaire Excel pour relevé de présence d'un élève pour toutes les matières
+     * @param nomEleve
+     * @param prenomEleve
+     */
     public static void creationFormulaireAbsenceEtudiant(String nomEleve, String prenomEleve) {
 
         if (existeEleve(nomEleve, prenomEleve)) {
@@ -79,7 +87,8 @@ public class TraitementControlePresence {
 
                 res.close();
                 state.close();
-
+                
+                TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification éléve");
                 generateCsvFile("csv/FormulaireAbsence" + nomEleve + prenomEleve + ".csv", contenu);
 
             } catch (Exception e) {
@@ -92,6 +101,10 @@ public class TraitementControlePresence {
 
     }
 
+    /**
+     * Creation d'un formulaire Excel pour relevé de présence des élèves pour une matière donnée
+     * @param nomMatiere
+     */
     public static void creationFormulaireAbsenceMatiere(String nomMatiere) {
         String contenu = nomMatiere + "\n";
 
@@ -116,7 +129,8 @@ public class TraitementControlePresence {
 
                 res.close();
                 state.close();
-
+                
+                TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification matière");
                 generateCsvFile("csv/FormulaireAbsence" + nomMatiere + ".csv", contenu);
 
             } catch (Exception e) {
@@ -129,6 +143,12 @@ public class TraitementControlePresence {
         }
     }
 
+    /**
+     * Creation d'un formulaire Excel pour relevé de présence d'un élève pour une matière donnée
+     * @param nomEleve
+     * @param prenomEleve
+     * @param nomMatiere
+     */
     public static void creationFormulaireAbsenceEtudiantPourUneMatière(String nomEleve, String prenomEleve, String nomMatiere) {
 
         if (existeEleve(nomEleve, prenomEleve) && existeMatiere(nomMatiere)) {
@@ -154,7 +174,8 @@ public class TraitementControlePresence {
 
                 res.close();
                 state.close();
-
+                
+                TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification éléve/matière");
                 generateCsvFile("csv/FormulaireAbsence" + nomEleve + prenomEleve + nomMatiere + ".csv", contenu);
 
             } catch (Exception e) {
@@ -162,11 +183,16 @@ public class TraitementControlePresence {
             }
         } else {
 
-            TraitementControlePresenceFrame.avertissement("Aucun élève ou cours répertorié", "Notifiation élève/matière");
+            TraitementControlePresenceFrame.avertissement("Aucun élève ou cours répertorié", "Notification élève/matière");
         }
 
     }
     
+    /**
+     * Verification de l'existence d'une matière dans la base de données
+     * @param nomMatiere
+     * @return 
+     */
     public static boolean existeMatiere(String nomMatiere) {
 
         boolean existeMatiere = false;
@@ -174,13 +200,14 @@ public class TraitementControlePresence {
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            String query = ("SELECT cours_designation "
-                    + "FROM cours "
-                    + "WHERE cours_designation = '" + nomMatiere.toUpperCase() + "';");
+            String query = ("SELECT cours_designation FROM cours WHERE cours_designation='"+ nomMatiere+"';");
+                    
 
             ResultSet res = state.executeQuery(query);
+            System.out.println(res.first()); 
             
-            while (res.next()) {
+            while (res.next()) {   
+                System.out.println((String)res.getString("cours_designation"));
                 if (res.getString("cours_designation").equals(nomMatiere)) {
                     existeMatiere = true;
                 }
@@ -195,6 +222,12 @@ public class TraitementControlePresence {
         return existeMatiere;
     }
 
+    /**
+     * Vérification de l'existence d'un élève dans la base de données
+     * @param nomEleve
+     * @param prenomEleve
+     * @return
+     */
     public static boolean existeEleve(String nomEleve, String prenomEleve) {
 
         boolean existeEleve = false;
@@ -222,7 +255,13 @@ public class TraitementControlePresence {
         }
         return existeEleve;
     }
-
+    
+    /**
+     * Génération du document Excel contenant les informations nécessaires
+     * @param sFileName
+     * @param contenu
+     * @return
+     */
     private static void generateCsvFile(String sFileName, String contenu) {
         try {
             FileWriter writer = new FileWriter(sFileName);

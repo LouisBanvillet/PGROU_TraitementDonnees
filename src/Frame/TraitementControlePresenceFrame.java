@@ -5,18 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 /**
  *
- * @author Louis
+ * @author Louis, Kevin
  */
+
 public class TraitementControlePresenceFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form TraitementControlePresenceFrame
+     * Initialisation des composants de la fenêtre 
      */
     public TraitementControlePresenceFrame() {
         initComponents();
@@ -104,6 +102,7 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_choixActionActionPerformed
 
     /**
+     * Les champs de la JTable sont initialisés selon l'item selectionné de la liste déroulante
      * @param args the command line arguments
      */
     class ItemAction implements ActionListener {
@@ -140,11 +139,14 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
                 default:
                     ;
             }
-
             modifTable(tabValeur);
         }
     }
 
+    /**
+     * 
+     * @param tabValeur
+     */
     public void modifTable(String[][] tabValeur) {
         tableDonnees.setModel(new javax.swing.table.DefaultTableModel(
                 tabValeur,
@@ -173,7 +175,13 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         tableDonnees.getColumnModel().getColumn(1).setResizable(false);
 
     }
-
+    
+    /**
+     * 
+     * Récupération des valeurs entrées par l'utilisateur lors de la validation du choix 
+     * Elles sont traitées dans TraitementControlePresence.java puis analysées
+     * 
+     */
     class BoutonListener implements ActionListener {
         //Redéfinition de la méthode actionPerformed()
 
@@ -204,11 +212,27 @@ public class TraitementControlePresenceFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Message d'avertissement si matière/élève non repertorié
+     * @param message
+     * @param titre
+     */
     public static void avertissement(String message, String titre) {
 
         JOptionPane.showMessageDialog(null, message, titre, JOptionPane.WARNING_MESSAGE);
 
     }
+    
+    /**
+     * Message d'information lors de la génération du document Excel
+     * @param message
+     * @param titre
+     */
+    public static void notification(String message, String titre){
+        
+        JOptionPane.showMessageDialog(null, message, titre, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox choixAction;
     private javax.swing.JButton creationBouton;

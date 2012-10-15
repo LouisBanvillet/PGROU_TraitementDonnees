@@ -1,3 +1,3 @@
-jdbc:postgresql://localhost:5432/AGAP_PGROU
-postgres
-sagara
+jdbc:postgresql://localhost:5432/pgrou
+kevin
+&&EÉÉI&'
