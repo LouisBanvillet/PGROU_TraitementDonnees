@@ -58,7 +58,6 @@ public class TraitementControlePresence {
 
         if (existeEleve(nomEleve, prenomEleve)) {
 
-
             String contenu = nomEleve + " " + prenomEleve + "\n";
 
             try {
@@ -76,7 +75,6 @@ public class TraitementControlePresence {
                 while (res.next()) {
                     contenu += res.getString("cours_designation") + ";" 
                             + Constantes.presence.get(res.getString("presence_status")) + "\n";
-
                 }
 
                 res.close();
@@ -131,6 +129,44 @@ public class TraitementControlePresence {
         }
     }
 
+    public static void creationFormulaireAbsenceEtudiantPourUneMatière(String nomEleve, String prenomEleve, String nomMatiere) {
+
+        if (existeEleve(nomEleve, prenomEleve) && existeMatiere(nomMatiere)) {
+
+            String contenu = nomEleve + " " + prenomEleve + ";" + nomMatiere + "\n";
+
+            try {
+                Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+                //On crée notre requête
+                String query = ("SELECT presence.presence_status "
+                        + "FROM presence, eleves, cours "
+                        + "WHERE presence.eleves_id = eleves.eleves_id AND presence.cours_id = cours.cours_id AND "
+                        + "eleves.eleves_nom = '" + nomEleve + "' AND "
+                        + "eleves.eleves_prenom = '" + prenomEleve + "' AND "
+                        + "cours.cours_designation = '" + nomMatiere + "';");
+
+                ResultSet res = state.executeQuery(query);
+
+                while (res.next()) {
+                    contenu += Constantes.presence.get(res.getString("presence_status")) + "\n";
+                }
+
+                res.close();
+                state.close();
+
+                generateCsvFile("csv/FormulaireAbsence" + nomEleve + prenomEleve + nomMatiere + ".csv", contenu);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            TraitementControlePresenceFrame.avertissement("Aucun élève ou cours répertorié", "Notifiation élève/matière");
+        }
+
+    }
+    
     public static boolean existeMatiere(String nomMatiere) {
 
         boolean existeMatiere = false;
