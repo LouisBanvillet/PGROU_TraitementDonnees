@@ -36,7 +36,6 @@ public class TraitementControlePresence {
         try {
             org.postgresql.Driver driver = new org.postgresql.Driver();
             System.out.println("DRIVER OK ! ");
-
             
             InputStream ips = new FileInputStream("MDP_connexionBDD.txt");
             InputStreamReader ipsr = new InputStreamReader(ips);
@@ -76,7 +75,8 @@ public class TraitementControlePresence {
                         + "FROM presence, eleves, cours "
                         + "WHERE presence.eleves_id = eleves.eleves_id AND presence.cours_id = cours.cours_id AND "
                         + "eleves.eleves_nom = '" + nomEleve + "' AND "
-                        + "eleves.eleves_prenom = '" + prenomEleve + "';");
+                        + "eleves.eleves_prenom = '" + prenomEleve + "' AND "
+                        + "presence.presence_status IS NOT NULL;");
 
                 ResultSet res = state.executeQuery(query);
 
@@ -117,7 +117,8 @@ public class TraitementControlePresence {
                 String query = ("SELECT cours.cours_designation, eleves.eleves_nom, eleves.eleves_prenom, presence.presence_status "
                         + "FROM presence, eleves, cours "
                         + "WHERE presence.eleves_id = eleves.eleves_id AND presence.cours_id = cours.cours_id AND "
-                        + "cours.cours_designation = '" + nomMatiere + "';");
+                        + "cours.cours_designation = '" + nomMatiere + "' AND "
+                        + "presence.presence_status IS NOT NULL;");
 
                 ResultSet res = state.executeQuery(query);
 
@@ -164,7 +165,8 @@ public class TraitementControlePresence {
                         + "WHERE presence.eleves_id = eleves.eleves_id AND presence.cours_id = cours.cours_id AND "
                         + "eleves.eleves_nom = '" + nomEleve + "' AND "
                         + "eleves.eleves_prenom = '" + prenomEleve + "' AND "
-                        + "cours.cours_designation = '" + nomMatiere + "';");
+                        + "cours.cours_designation = '" + nomMatiere + "' AND "
+                        + "presence.presence_status IS NOT NULL;");
 
                 ResultSet res = state.executeQuery(query);
 
@@ -200,14 +202,11 @@ public class TraitementControlePresence {
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            String query = ("SELECT cours_designation FROM cours WHERE cours_designation='"+ nomMatiere+"';");
-                    
+            String query = ("SELECT cours_designation FROM cours WHERE cours_designation='" + nomMatiere + "';");
 
             ResultSet res = state.executeQuery(query);
-            System.out.println(res.first()); 
             
             while (res.next()) {   
-                System.out.println((String)res.getString("cours_designation"));
                 if (res.getString("cours_designation").equals(nomMatiere)) {
                     existeMatiere = true;
                 }
