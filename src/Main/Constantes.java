@@ -18,5 +18,7 @@ public final class Constantes {
         presence.put("2", "Absent");
         presence.put("3", "Excusé");
     }
+    public final static String repertoire = "csv";
+    public final static String nomFichier = "FormulaireAbsence";
     
 }

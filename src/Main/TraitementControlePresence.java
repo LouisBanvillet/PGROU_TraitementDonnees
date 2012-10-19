@@ -6,6 +6,7 @@ package Main;
 
 import Frame.TraitementControlePresenceFrame;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -86,10 +87,14 @@ public class TraitementControlePresence {
                 }
 
                 res.close();
-                state.close();
+                state.close();                
                 
-                TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification éléve");
-                generateCsvFile("csv/FormulaireAbsence" + nomEleve + prenomEleve + ".csv", contenu);
+                if(generateCsvFile(Constantes.nomFichier+nomEleve+prenomEleve +".csv", contenu)){
+                    TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification éléve");
+                }
+                else{
+                    TraitementControlePresenceFrame.avertissement("Le fichier n'a pu être généré", "Erreur fichier");
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -129,11 +134,15 @@ public class TraitementControlePresence {
                 }
 
                 res.close();
-                state.close();
+                state.close();                
                 
+                
+                if(generateCsvFile(Constantes.nomFichier+nomMatiere +".csv", contenu)){
                 TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification matière");
-                generateCsvFile("csv/FormulaireAbsence" + nomMatiere + ".csv", contenu);
-
+                }
+                else{
+                    TraitementControlePresenceFrame.avertissement("Le fichier n'a pu être généré", "Erreur fichier");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -177,13 +186,19 @@ public class TraitementControlePresence {
                 res.close();
                 state.close();
                 
-                TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification éléve/matière");
-                generateCsvFile("csv/FormulaireAbsence" + nomEleve + prenomEleve + nomMatiere + ".csv", contenu);
+                if(generateCsvFile(Constantes.nomFichier+nomEleve+prenomEleve+nomMatiere +".csv", contenu)){
+                    TraitementControlePresenceFrame.notification("Le relevé de présence a été généré", "Notification éléve/matière");
+
+                }
+                else {
+                     TraitementControlePresenceFrame.avertissement("Le fichier n'a pu être généré", " Erreur fichier");
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        }
+        else {
 
             TraitementControlePresenceFrame.avertissement("Aucun élève ou cours répertorié", "Notification élève/matière");
         }
@@ -256,24 +271,34 @@ public class TraitementControlePresence {
     }
     
     /**
-     * Génération du document Excel contenant les informations nécessaires
+     * Génération du document Excel contenant les informations nécessaires avec vérification si existence dossier
      * @param sFileName
      * @param contenu
      * @return
      */
-    private static void generateCsvFile(String sFileName, String contenu) {
+    private static boolean generateCsvFile(String sFileName, String contenu) {
+        
+        boolean fichierGenere=false;
+        File csv = new File(Constantes.repertoire);
+        
+        if(!csv.exists() && !csv.isDirectory()){
+            new File(Constantes.repertoire).mkdir();            
+        }
         try {
-            FileWriter writer = new FileWriter(sFileName);
+            FileWriter writer = new FileWriter(Constantes.repertoire+"/"+sFileName);
 
             writer.append(contenu);
 
             writer.flush();
             writer.close();
+            fichierGenere=true;
+            
         } catch (NullPointerException e) {
             System.out.println("Erreur : pointeur null");
         } catch (IOException e) {
             System.out.println("Problème d'IO");
             e.printStackTrace();
         }
+      return fichierGenere;
     }
 }
