@@ -1,3 +1,5 @@
 /dist/
 
 /MDP_connexionBDD.txt
+/nbproject/private/
+/build/
